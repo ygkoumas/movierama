@@ -7,7 +7,8 @@ def get_movies_sorted_by_hates():
     movies = Movies.get_movies()
     movies.sort(
         reverse=True,
-        key=lambda movie: len(hates[movie['id']]) if movie['id'] in hates else 0
+        key=lambda movie: len(
+            hates[movie['id']]) if movie['id'] in hates else 0
     )
     return movies
 
@@ -17,6 +18,7 @@ def get_movies_sorted_by_likes():
     movies = Movies.get_movies()
     movies.sort(
         reverse=True,
-        key=lambda movie: len(likes[movie['id']]) if movie['id'] in likes else 0
+        key=lambda movie: len(
+            likes[movie['id']]) if movie['id'] in likes else 0
     )
     return movies

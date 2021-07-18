@@ -1,9 +1,10 @@
 import random
 from data.users import Users
 
+
 def _set_random_key():
     global RANDOM_KEY
-    RANDOM_KEY = [random.randint(-10,10) for _ in range(100)]
+    RANDOM_KEY = [random.randint(-10, 10) for _ in range(100)]
 
 
 def init():
@@ -12,7 +13,8 @@ def init():
 
 def _shift_string(word, negative=False):
     direction = -1 if negative else 1
-    shifted_letters = [chr(ord(char) + direction * RANDOM_KEY[index]) for index, char in enumerate(word)]
+    shifted_letters = [chr(ord(char) + direction * RANDOM_KEY[index])
+                       for index, char in enumerate(word)]
     return "".join(shifted_letters)
 
 
@@ -34,13 +36,14 @@ def validate_token(token):
     if username in Users.get_users():
         return username
     return None
-    
+
 
 def register_user(username, password):
     if username in Users.get_users():
         return False
-    
+
     Users.add_user(username, password)
     return True
+
 
 init()

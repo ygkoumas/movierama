@@ -7,11 +7,10 @@ class MovieVotesClass:
         self.votes_file = votes_file
         self.__fetch_votes()
 
-
     def __fetch_votes(self):
         self.likes = dict()
         self.hates = dict()
-        self.parsed_votes = pd.read_csv(self.votes_file, dtype = 'string')
+        self.parsed_votes = pd.read_csv(self.votes_file, dtype='string')
         for _, ml in self.parsed_votes.iterrows():
             movie_id = ml['movie_id']
             username = ml['username']
@@ -26,10 +25,8 @@ class MovieVotesClass:
                     self.hates[movie_id] = set()
                 self.hates[movie_id].add(username)
 
-
     def __save_votes(self):
         self.parsed_votes.to_csv(self.votes_file, index=False)
-
 
     def __remove_vote(self, movie_id, username):
         print(self.parsed_votes)
@@ -37,34 +34,31 @@ class MovieVotesClass:
         print(res1)
         res2 = res1.query(f' username == "{username}"')
         print(res2)
-        index=res2.index
+        index = res2.index
         print(index)
-        self.parsed_votes.drop(index, inplace=True)      
-
+        self.parsed_votes.drop(index, inplace=True)
 
     def vote_like(self, movie_id, username):
         self.__remove_vote(movie_id, username)
-        self.parsed_votes.loc[len(self.parsed_votes.index)] = [movie_id, username, 'true', 'false'] 
+        self.parsed_votes.loc[len(self.parsed_votes.index)] = [
+            movie_id, username, 'true', 'false']
         self.__save_votes()
         self.__fetch_votes()
-
 
     def vote_hate(self, movie_id, username):
         self.__remove_vote(movie_id, username)
-        self.parsed_votes.loc[len(self.parsed_votes.index)] = [movie_id, username, 'false', 'true'] 
+        self.parsed_votes.loc[len(self.parsed_votes.index)] = [
+            movie_id, username, 'false', 'true']
         self.__save_votes()
         self.__fetch_votes()
-
 
     def remove_vote(self, movie_id, username):
         self.__remove_vote(movie_id, username)
         self.__save_votes()
         self.__fetch_votes()
 
-
     def get_likes(self):
         return self.likes
-
 
     def get_hates(self):
         return self.hates

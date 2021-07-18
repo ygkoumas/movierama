@@ -9,8 +9,9 @@ class UsersClass:
         self.__fetch_users()
 
     def __fetch_users(self):
-        parsed_users = pd.read_csv(self.users_file, dtype = 'string')
-        self.users = {user['username']: user['password'] for index, user in parsed_users.iterrows()}
+        parsed_users = pd.read_csv(self.users_file, dtype='string')
+        self.users = {user['username']: user['password']
+                      for index, user in parsed_users.iterrows()}
 
     def add_user(self, username, password):
         with open(self.users_file, "a+") as uf:
@@ -20,5 +21,6 @@ class UsersClass:
 
     def get_users(self):
         return self.users
+
 
 Users = UsersClass(USERS_FILE)

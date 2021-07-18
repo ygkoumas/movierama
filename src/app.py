@@ -8,30 +8,29 @@ import util.movies as um
 from datetime import date
 
 
-
 app = Flask(__name__, template_folder="templates")
 
 
 def get_username(cookies):
     return validate_token(cookies.get('token') or '')
-    
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if get_username(request.cookies):
-        return make_response(redirect('/','303'))
+        return make_response(redirect('/', '303'))
 
     if request.method == 'GET':
         return render_template('login.html', error='')
 
     username = request.form['username']
     if validate_user(username,
-                    request.form['password']):
+                     request.form['password']):
         token = create_token(username)
-        resp = make_response(redirect('/','303'))
+        resp = make_response(redirect('/', '303'))
         resp.set_cookie('token', token, samesite="None", secure=True)
 
-        return resp 
+        return resp
 
     return render_template('login.html', error='Invalid username or password')
 
@@ -39,19 +38,19 @@ def login():
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     if get_username(request.cookies):
-        return make_response(redirect('/','303'))
+        return make_response(redirect('/', '303'))
 
     if request.method == 'GET':
         return render_template('signup.html', error='')
 
     username = request.form['username']
     if register_user(username,
-                    request.form['password']):
+                     request.form['password']):
         token = create_token(username)
-        resp = make_response(redirect('/','303'))
+        resp = make_response(redirect('/', '303'))
         resp.set_cookie('token', token, samesite="None", secure=True)
 
-        return resp 
+        return resp
 
     return render_template('signup.html', error='Username already in use')
 
@@ -68,7 +67,7 @@ def show_movies():
 
     sort_by = request.args.get('sortby')
     filter_by = request.args.get('filterby')
-    
+
     likes = MovieVotes.get_likes()
     hates = MovieVotes.get_hates()
 
@@ -88,7 +87,7 @@ def show_movies():
 def add_movie():
     username = get_username(request.cookies)
     if not username:
-        return make_response(redirect('/','303'))
+        return make_response(redirect('/', '303'))
 
     if request.method == 'GET':
         return render_template('add_movie.html')
@@ -101,7 +100,4 @@ def add_movie():
         username=username
     )
 
-
-    return make_response(redirect('/','303'))
-
-    
+    return make_response(redirect('/', '303'))
