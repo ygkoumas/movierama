@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+  
+<html>
+<head>
+    <title>Movies</title>
+</head>
+<body>
+<h1>MovieRama</h1>
+{% if username != '' %}
+<div>Welcome back {{username}}</div>
+{% else %}
+<div style='text-align: right;'><a href={{ url_for('login') }}>Log in</a> or <a href={{ url_for('signup') }}>Sign up</a></div>
+{% endif %}
+
+{% if username != '' %}
+<div><a href={{ url_for('add_movie') }}>New Movie</a></div>
+{% endif %}
+
+<div>Sort by: <a href={{ url_for('show_movies', sortby='likes') }}>Likes</a> | <a href={{ url_for('show_movies', sortby='hates') }}>Hates</a> | <a href={{ url_for('show_movies', sortby='date') }}">Date</a> </div>
+{%for movie in movies%}
+    <div style='margin-bottom: 20px; padding: 20px 10px 10px; width: 800px; background: #ddd'>
+        <dif style='font-size: 130%'>{{movie['title']}}</dif>
+        <div style='padding-bottom: 10px'>{{movie['description']}}</div>
+        <span style='font-size: 80%'>{{movie['date']}}</span>
+        <div style='font-size: 80%; text-align: right;'><a href={{ url_for('show_movies', filterby=movie['username']) }}>{{movie['username']}}</a></div>
+ 
+        <div>likes: {{ likes[movie['id']]|length if movie['id'] in likes else 0 }}</div>
+        <div>hates: {{ hates[movie['id']]|length if movie['id'] in hates else 0 }}</div>
+
+        
+        {% if movie['id'] in likes and username in likes[movie['id']] %}
+        <div>You like this movie | <a href={{ url_for('show_movies', unvote=movie['id']) }}>Unlike</a> </div>
+        {% elif movie['id'] in hates and username in hates[movie['id']] %}
+        <div>You hate this movie | <a href={{ url_for('show_movies', unvote=movie['id']) }}>Unhate</a> </div>
+        {% elif username != '' %}
+        <div><a href={{ url_for('show_movies', like=movie['id']) }}>Like</a> | <a href={{ url_for('show_movies', hate=movie['id']) }}>Hate</a> </div>
+        {% endif %}
+    </div>
+{%endfor%}
+
+</body>
+</html>

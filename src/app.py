@@ -1,0 +1,107 @@
+import re
+from flask import Flask, render_template, make_response, request, redirect
+from markupsafe import escape
+from util.login import validate_user, create_token, validate_token, register_user
+from data.movies import Movies
+from data.movie_votes import MovieVotes
+import util.movies as um
+from datetime import date
+
+
+
+app = Flask(__name__, template_folder="templates")
+
+
+def get_username(cookies):
+    return validate_token(cookies.get('token') or '')
+    
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if get_username(request.cookies):
+        return make_response(redirect('/','303'))
+
+    if request.method == 'GET':
+        return render_template('login.html', error='')
+
+    username = request.form['username']
+    if validate_user(username,
+                    request.form['password']):
+        token = create_token(username)
+        resp = make_response(redirect('/','303'))
+        resp.set_cookie('token', token, samesite="None", secure=True)
+
+        return resp 
+
+    return render_template('login.html', error='Invalid username or password')
+
+
+@app.route('/signup', methods=['GET', 'POST'])
+def signup():
+    if get_username(request.cookies):
+        return make_response(redirect('/','303'))
+
+    if request.method == 'GET':
+        return render_template('signup.html', error='')
+
+    username = request.form['username']
+    if register_user(username,
+                    request.form['password']):
+        token = create_token(username)
+        resp = make_response(redirect('/','303'))
+        resp.set_cookie('token', token, samesite="None", secure=True)
+
+        return resp 
+
+    return render_template('signup.html', error='Username already in use')
+
+
+@app.route('/')
+def show_movies():
+    username = get_username(request.cookies)
+    if request.args.get('like'):
+        MovieVotes.vote_like(str(request.args.get('like')), username)
+    elif request.args.get('hate'):
+        MovieVotes.vote_hate(str(request.args.get('hate')), username)
+    elif request.args.get('unvote'):
+        MovieVotes.remove_vote(str(request.args.get('unvote')), username)
+
+    sort_by = request.args.get('sortby')
+    filter_by = request.args.get('filterby')
+    
+    likes = MovieVotes.get_likes()
+    hates = MovieVotes.get_hates()
+
+    if filter_by is not None:
+        movies = Movies.get_movies_filtered_by_user(filter_by)
+    elif sort_by == 'hates':
+        movies = um.get_movies_sorted_by_hates()
+    elif sort_by == 'likes':
+        movies = um.get_movies_sorted_by_likes()
+    else:
+        movies = Movies.get_movies_sorted_by_date()
+
+    return render_template('movies.html', movies=movies, username=username or '', likes=likes, hates=hates)
+
+
+@app.route('/add-movie', methods=['GET', 'POST'])
+def add_movie():
+    username = get_username(request.cookies)
+    if not username:
+        return make_response(redirect('/','303'))
+
+    if request.method == 'GET':
+        return render_template('add_movie.html')
+
+    rf = request.form
+    Movies.add_movie(
+        title=rf['title'],
+        description=rf['description'],
+        date=date.today().strftime("%d/%m/%Y"),
+        username=username
+    )
+
+
+    return make_response(redirect('/','303'))
+
+    
