@@ -1,5 +1,12 @@
 <!DOCTYPE html>
 <html>
+    <head>
+        <style>
+            .error-message {
+                color: #f00;
+            }
+        </style>
+    </head>
     <body>
         <h2>Login to your account</h2>
         <form action="/login"  method="post">
@@ -9,7 +16,7 @@
             <input type="password" name="password" value=""><br><br>
             <input type="submit" value="Log in">
         </form> 
-        <div style="color: red">
+        <div class="error-message">
             {{ error }}
         </div>
     </body>

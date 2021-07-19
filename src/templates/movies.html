@@ -32,7 +32,7 @@
 
         {%for movie in movies%}
         <div class='movie-section'>
-            <dif class='movie-title'>{{movie['title']}}</dif>
+            <div class='movie-title'>{{movie['title']}}</div>
             <div>Posted by <a href={{ url_for('show_movies', filterby=movie['username']) }}>{{movie['username']}}</a>, {{movie['date']}}</div>
             <div class="description">{{movie['description']}}</div>
     

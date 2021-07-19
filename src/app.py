@@ -7,7 +7,7 @@ import util.login as ul
 from datetime import date
 
 
-app = Flask(__name__, template_folder="templates")
+app = Flask(__name__, template_folder='templates')
 
 
 def get_username(cookies):
@@ -27,7 +27,7 @@ def login():
                      request.form['password']):
         token = ul.create_token(username)
         resp = make_response(redirect('/', '303'))
-        resp.set_cookie('token', token, samesite="None", secure=True)
+        resp.set_cookie('token', token, samesite='None', secure=True)
 
         return resp
 
@@ -47,7 +47,7 @@ def signup():
                      request.form['password']):
         token = ul.create_token(username)
         resp = make_response(redirect('/', '303'))
-        resp.set_cookie('token', token, samesite="None", secure=True)
+        resp.set_cookie('token', token, samesite='None', secure=True)
 
         return resp
 

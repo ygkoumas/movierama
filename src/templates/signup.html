@@ -1,5 +1,12 @@
 <!DOCTYPE html>
 <html>
+    <head>
+        <style>
+            .error-message {
+                color: #f00;
+            }
+        </style>
+    </head>
     <body>
         <h2>Create an account</h2>
         <form action="/signup"  method="post">
@@ -9,7 +16,7 @@
             <input type="password" name="password" value=""><br><br>
             <input type="submit" value="Sign up">
         </form> 
-        <div style="color: red">
+        <div class="error-message">
             {{ error }}
         </div>
     </body>
