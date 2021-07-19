@@ -1,9 +1,9 @@
 import re
 from flask import Flask, render_template, make_response, request, redirect, escape
-from util.login import validate_user, create_token, validate_token, register_user
 from data.movies import Movies
 from data.movie_votes import MovieVotes
 import util.movies as um
+import util.login as ul
 from datetime import date
 
 
@@ -11,7 +11,7 @@ app = Flask(__name__, template_folder="templates")
 
 
 def get_username(cookies):
-    return validate_token(cookies.get('token') or '')
+    return ul.validate_token(cookies.get('token') or '')
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -23,9 +23,9 @@ def login():
         return render_template('login.html', error='')
 
     username = escape(request.form['username'])
-    if validate_user(username,
+    if ul.validate_user(username,
                      request.form['password']):
-        token = create_token(username)
+        token = ul.create_token(username)
         resp = make_response(redirect('/', '303'))
         resp.set_cookie('token', token, samesite="None", secure=True)
 
@@ -43,9 +43,9 @@ def signup():
         return render_template('signup.html', error='')
 
     username = escape(request.form['username'])
-    if register_user(username,
+    if ul.register_user(username,
                      request.form['password']):
-        token = create_token(username)
+        token = ul.create_token(username)
         resp = make_response(redirect('/', '303'))
         resp.set_cookie('token', token, samesite="None", secure=True)
 
