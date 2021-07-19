@@ -1,4 +1,4 @@
-# MovieRama: movie share web app
+# MovieRama
 
 Web application for sharing movie titles and voting for them.
 
