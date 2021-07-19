@@ -19,7 +19,8 @@ def _shift_string(word, negative=False):
 
 
 def validate_user(username, password):
-    return username in Users.get_users() and Users.get_users()[username] == password
+    return username in Users.get_users() and Users.get_users()[
+        username] == password
 
 
 def create_token(username):

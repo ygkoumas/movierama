@@ -1,0 +1,84 @@
+body {
+  max-width: 1300px;
+}
+
+.inline {
+  display: inline;
+}
+
+.link-button {
+  background: none;
+  border: none;
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 1em;
+  font-family: serif;
+}
+
+.link-button:focus {
+  outline: none;
+}
+
+.link-button:active {
+  color:red;
+}
+
+h1 {
+  padding-bottom: 30px;
+}
+
+.account-area,.add-movie {
+  text-align: right;
+}
+
+.add-movie a{
+  border-radius: 25px;
+  border: 1px solid #195a26;
+  background: #299a36;
+  padding: 15px 25px;
+  color: #fff;
+  position: relative;
+  bottom: -70px;
+}
+
+.add-movie {
+  position: relative;
+}
+
+.sort, .add-movie, h1, .account-area {
+  display: inline-block;
+  width: 50%;
+}
+
+.movies-header {
+  border: 1px solid black;
+  margin-bottom: 20px;
+  padding: 20px 10px;
+  background: #eee;
+}
+
+.movie-section {
+  margin-bottom: 20px;
+  padding: 20px 20px;
+  width: 800px;
+  position: relative;
+  border: 1px solid black;
+}
+
+.movie-section .movie-title {
+  font-size: 150%;
+}
+
+.movie-section .description {
+  padding: 10px 0 30px;
+}
+
+.movie-section div {
+  padding: 10px 0;
+}
+
+.movie-section span.vote {
+  position: absolute;
+  right: 0;
+}

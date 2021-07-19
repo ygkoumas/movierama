@@ -1,6 +1,5 @@
 import re
-from flask import Flask, render_template, make_response, request, redirect
-from markupsafe import escape
+from flask import Flask, render_template, make_response, request, redirect, escape
 from util.login import validate_user, create_token, validate_token, register_user
 from data.movies import Movies
 from data.movie_votes import MovieVotes
@@ -81,7 +80,8 @@ def show_movies():
     else:
         movies = Movies.get_movies_sorted_by_date()
 
-    return render_template('movies.html', movies=movies, username=username or '', likes=likes, hates=hates)
+    return render_template('movies.html', movies=movies,
+                           username=username or '', likes=likes, hates=hates)
 
 
 @app.route('/add-movie', methods=['GET', 'POST'])
