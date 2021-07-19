@@ -1,0 +1,5 @@
+movie_id,username,like,hate
+1,giannis,true,false
+0,giannis,false,true
+1,maria,true,false
+0,maria,true,false
