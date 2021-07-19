@@ -82,3 +82,12 @@ h1 {
   position: absolute;
   right: 0;
 }
+
+a.signup {
+  border-radius: 25px;
+  border: 1px solid #015;
+  background: #25D;
+  padding: 5px 20px;
+  color: #fff;
+  text-decoration: none;
+}

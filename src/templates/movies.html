@@ -13,7 +13,7 @@
 {% if username != '' %}
 Welcome back {{username}}
 {% else %}
-<a href={{ url_for('login') }}>Log in</a> or <a href={{ url_for('signup') }}>Sign up</a></div>
+<a href={{ url_for('login') }}>Log in</a> or <a class="signup" href={{ url_for('signup') }}>Sign up</a></div>
 {% endif %}
 </div>
 
@@ -38,8 +38,8 @@ Welcome back {{username}}
         <div>Posted by <a href={{ url_for('show_movies', filterby=movie['username']) }}>{{movie['username']}}</a>, {{movie['date']}}</div>
         <div class="description">{{movie['description']}}</div>
  
-        <span>likes: {{ likes[movie['id']]|length if movie['id'] in likes else 0 }}</span> |
-        <span>hates: {{ hates[movie['id']]|length if movie['id'] in hates else 0 }}</span>
+        <span>Likes: {{ likes[movie['id']]|length if movie['id'] in likes else 0 }}</span> |
+        <span>Hates: {{ hates[movie['id']]|length if movie['id'] in hates else 0 }}</span>
 
         
         {% if movie['id'] in likes and username in likes[movie['id']] %}

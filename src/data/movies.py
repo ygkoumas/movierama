@@ -22,16 +22,13 @@ class MoviesClass:
             mf.write(f"{title},{description},{date},{username}")
         self.__fetch_movies()
 
-    def get_movies(self):
-        return [movie for _, movie in self.movies.iterrows()]
-
     def get_movies_sorted_by_date(self):
         movies = [movie for _, movie in self.movies.iterrows()]
         return movies[::-1]
 
     def get_movies_filtered_by_user(self, username):
         movies = self.movies.query(f'username == "{username}"')
-        return [movie for _, movie in movies.iterrows()]
+        return [movie for _, movie in movies.iterrows()][::-1]
 
 
 Movies = MoviesClass(MOVIES_FILE)

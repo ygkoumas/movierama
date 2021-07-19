@@ -4,7 +4,7 @@ from data.movie_votes import MovieVotes
 
 def get_movies_sorted_by_hates():
     hates = MovieVotes.get_hates()
-    movies = Movies.get_movies()
+    movies = Movies.get_movies_sorted_by_date()
     movies.sort(
         reverse=True,
         key=lambda movie: len(
@@ -15,7 +15,7 @@ def get_movies_sorted_by_hates():
 
 def get_movies_sorted_by_likes():
     likes = MovieVotes.get_likes()
-    movies = Movies.get_movies()
+    movies = Movies.get_movies_sorted_by_date()
     movies.sort(
         reverse=True,
         key=lambda movie: len(
