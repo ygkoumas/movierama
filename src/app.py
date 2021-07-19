@@ -59,11 +59,11 @@ def show_movies():
     username = get_username(request.cookies)
     rf = request.form
     if 'like' in rf:
-        MovieVotes.vote_like(str(rf['like']), username)
+        MovieVotes.vote_like(rf['like'], username)
     elif 'hate' in rf:
-        MovieVotes.vote_hate(str(rf['hate']), username)
+        MovieVotes.vote_hate(rf['hate'], username)
     elif 'unvote' in rf:
-        MovieVotes.remove_vote(str(rf['unvote']), username)
+        MovieVotes.remove_vote(rf['unvote'], username)
 
     sort_by = request.args.get('sortby')
     filter_by = request.args.get('filterby')
