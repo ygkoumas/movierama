@@ -1,56 +1,53 @@
 {% from 'macros.html' import post_link %}
 
 <!DOCTYPE html>
-  
 <html>
-<head>
-    <title>Movies</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-</head>
-<body>
-<h1>MovieRama</h1><!--
---><div class='account-area'>
-{% if username != '' %}
-Welcome back {{username}}
-{% else %}
-<a href={{ url_for('login') }}>Log in</a> or <a class="signup" href={{ url_for('signup') }}>Sign up</a></div>
-{% endif %}
-</div>
+    <head>
+        <title>MoviesRama</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    </head>
+    <body>
+        <h1>MovieRama</h1><!--
+        --><div class='account-area'>
+            {% if username != '' %}
+            Welcome back {{username}}
+            {% else %}
+            <a href={{ url_for('login') }}>Log in</a> or <a class="signup" href={{ url_for('signup') }}>Sign up</a>
+            {% endif %}
+        </div>
 
+        <div class='movies-header'>
+            <div class='sort'>
+                Sort by: 
+                <a href={{ url_for('show_movies', sortby='likes') }}>Likes</a> | 
+                <a href={{ url_for('show_movies', sortby='hates') }}>Hates</a> | 
+                <a href={{ url_for('show_movies', sortby='date') }}">Date</a> 
+            </div><!--
+            --><div class='add-movie'>
+            {% if username != '' %}
+            <a href={{ url_for('add_movie') }}>New Movie</a>
+            {% endif %}
+            </div>
+        </div>
 
-<div class='movies-header'>
-<div class='sort'>
-    Sort by: 
-    <a href={{ url_for('show_movies', sortby='likes') }}>Likes</a> | 
-    <a href={{ url_for('show_movies', sortby='hates') }}>Hates</a> | 
-    <a href={{ url_for('show_movies', sortby='date') }}">Date</a> 
-</div><!--
---><div class='add-movie'>
-{% if username != '' %}
-<a href={{ url_for('add_movie') }}>New Movie</a>
-{% endif %}
-</div>
-</div>
+        {%for movie in movies%}
+        <div class='movie-section'>
+            <dif class='movie-title'>{{movie['title']}}</dif>
+            <div>Posted by <a href={{ url_for('show_movies', filterby=movie['username']) }}>{{movie['username']}}</a>, {{movie['date']}}</div>
+            <div class="description">{{movie['description']}}</div>
+    
+            <span>Likes: {{ likes[movie['id']]|length if movie['id'] in likes else 0 }}</span> |
+            <span>Hates: {{ hates[movie['id']]|length if movie['id'] in hates else 0 }}</span>
 
-{%for movie in movies%}
-    <div class='movie-section'>
-        <dif class='movie-title'>{{movie['title']}}</dif>
-        <div>Posted by <a href={{ url_for('show_movies', filterby=movie['username']) }}>{{movie['username']}}</a>, {{movie['date']}}</div>
-        <div class="description">{{movie['description']}}</div>
- 
-        <span>Likes: {{ likes[movie['id']]|length if movie['id'] in likes else 0 }}</span> |
-        <span>Hates: {{ hates[movie['id']]|length if movie['id'] in hates else 0 }}</span>
-
-        
-        {% if movie['id'] in likes and username in likes[movie['id']] %}
-        <span class='vote'>You like this movie | {{ post_link('Unlike', 'unvote', movie['id']) }}</span>
-        {% elif movie['id'] in hates and username in hates[movie['id']] %}
-        <span class='vote'>You hate this movie | {{ post_link('Unhate', 'unvote', movie['id']) }}</span>
-        {% elif username != '' %}
-        <span class='vote'>{{ post_link('Like', 'like', movie['id']) }} | {{ post_link('Hate', 'hate', movie['id']) }} </span>
-        {% endif %}
-    </div>
-{%endfor%}
-
-</body>
+            
+            {% if movie['id'] in likes and username in likes[movie['id']] %}
+            <span class='vote'>You like this movie | {{ post_link('Unlike', 'unvote', movie['id']) }}</span>
+            {% elif movie['id'] in hates and username in hates[movie['id']] %}
+            <span class='vote'>You hate this movie | {{ post_link('Unhate', 'unvote', movie['id']) }}</span>
+            {% elif username != '' %}
+            <span class='vote'>{{ post_link('Like', 'like', movie['id']) }} | {{ post_link('Hate', 'hate', movie['id']) }} </span>
+            {% endif %}
+        </div>
+        {%endfor%}
+    </body>
 </html>

@@ -1,18 +1,16 @@
 <!DOCTYPE html>
 <html>
-<body>
-
-    <h2>Login to your account</h2>
-
-    <form action="/login"  method="post">
-        <label>Username:</label><br>
-        <input type="text" name="username" value=""><br>
-        <label>Password:</label><br>
-        <input type="password" name="password" value=""><br><br>
-        <input type="submit" value="Log in">
-    </form> 
-    <div style="color: red">
-        {{ error }}
-    </div>
-</body>
+    <body>
+        <h2>Login to your account</h2>
+        <form action="/login"  method="post">
+            <label>Username:</label><br>
+            <input type="text" name="username" value=""><br>
+            <label>Password:</label><br>
+            <input type="password" name="password" value=""><br><br>
+            <input type="submit" value="Log in">
+        </form> 
+        <div style="color: red">
+            {{ error }}
+        </div>
+    </body>
 </html>
