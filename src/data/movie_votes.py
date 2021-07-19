@@ -29,13 +29,9 @@ class MovieVotesClass:
         self.parsed_votes.to_csv(self.votes_file, index=False)
 
     def __remove_vote(self, movie_id, username):
-        print(self.parsed_votes)
-        res1 = self.parsed_votes.query(f'movie_id == "{movie_id}"')
-        print(res1)
-        res2 = res1.query(f' username == "{username}"')
-        print(res2)
-        index = res2.index
-        print(index)
+        movie_votes = self.parsed_votes.query(f'movie_id == "{movie_id}"')
+        user_movie_vote = movie_votes.query(f'username == "{username}"')
+        index = user_movie_vote.index
         self.parsed_votes.drop(index, inplace=True)
 
     def vote_like(self, movie_id, username):

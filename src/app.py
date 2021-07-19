@@ -23,7 +23,7 @@ def login():
     if request.method == 'GET':
         return render_template('login.html', error='')
 
-    username = request.form['username']
+    username = escape(request.form['username'])
     if validate_user(username,
                      request.form['password']):
         token = create_token(username)
@@ -43,7 +43,7 @@ def signup():
     if request.method == 'GET':
         return render_template('signup.html', error='')
 
-    username = request.form['username']
+    username = escape(request.form['username'])
     if register_user(username,
                      request.form['password']):
         token = create_token(username)
@@ -55,15 +55,16 @@ def signup():
     return render_template('signup.html', error='Username already in use')
 
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def show_movies():
     username = get_username(request.cookies)
-    if request.args.get('like'):
-        MovieVotes.vote_like(str(request.args.get('like')), username)
-    elif request.args.get('hate'):
-        MovieVotes.vote_hate(str(request.args.get('hate')), username)
-    elif request.args.get('unvote'):
-        MovieVotes.remove_vote(str(request.args.get('unvote')), username)
+    rf = request.form
+    if 'like' in rf:
+        MovieVotes.vote_like(str(rf['like']), username)
+    elif 'hate' in rf:
+        MovieVotes.vote_hate(str(rf['hate']), username)
+    elif 'unvote' in rf:
+        MovieVotes.remove_vote(str(rf['unvote']), username)
 
     sort_by = request.args.get('sortby')
     filter_by = request.args.get('filterby')
@@ -94,8 +95,8 @@ def add_movie():
 
     rf = request.form
     Movies.add_movie(
-        title=rf['title'],
-        description=rf['description'],
+        title=escape(rf['title']),
+        description=escape(rf['description']),
         date=date.today().strftime("%d/%m/%Y"),
         username=username
     )

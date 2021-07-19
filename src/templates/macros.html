@@ -1,0 +1,8 @@
+{% macro post_link(link_name, param, value) %}
+    <form method="post" action={{ url_for(request.endpoint, **request.args) }} class="inline">
+        <input type="hidden" name="{{ param }}" value="{{ value }}">
+        <button type="submit" class="link-button">
+          {{ link_name }}
+        </button>
+    </form>
+{% endmacro %}

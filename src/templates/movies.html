@@ -1,3 +1,5 @@
+{% from 'macros.html' import post_link %}
+
 <!DOCTYPE html>
   
 <html>
@@ -29,11 +31,11 @@
 
         
         {% if movie['id'] in likes and username in likes[movie['id']] %}
-        <div>You like this movie | <a href={{ url_for('show_movies', unvote=movie['id']) }}>Unlike</a> </div>
+        <div>You like this movie | {{ post_link('Unlike', 'unvote', movie['id']) }}</div>
         {% elif movie['id'] in hates and username in hates[movie['id']] %}
-        <div>You hate this movie | <a href={{ url_for('show_movies', unvote=movie['id']) }}>Unhate</a> </div>
+        <div>You hate this movie | {{ post_link('Unhate', 'unvote', movie['id']) }}</div>
         {% elif username != '' %}
-        <div><a href={{ url_for('show_movies', like=movie['id']) }}>Like</a> | <a href={{ url_for('show_movies', hate=movie['id']) }}>Hate</a> </div>
+        <div>{{ post_link('Like', 'like', movie['id']) }} | {{ post_link('Hate', 'hate', movie['id']) }} </div>
         {% endif %}
     </div>
 {%endfor%}
