@@ -9,7 +9,8 @@ class MoviesClass:
         self.__fetch_movies()
 
     def __fetch_movies(self):
-        self.parsed_movies = pd.read_csv(MOVIES_FILE, dtype='string', converters={field: lambda text: text.replace('̬¦', ',') for field in ['title', 'description']})
+        self.parsed_movies = pd.read_csv(MOVIES_FILE, dtype='string', converters={
+                                         field: lambda text: text.replace('̬¦', ',') for field in ['title', 'description']})
         self.parsed_movies.reset_index(level=0, inplace=True)
         self.parsed_movies.rename({'index': 'id'}, axis=1, inplace=True)
         self.movies = self.parsed_movies.applymap(str)

@@ -24,7 +24,7 @@ def login():
 
     username = escape(request.form['username'])
     if ul.validate_user(username,
-                     request.form['password']):
+                        request.form['password']):
         token = ul.create_token(username)
         resp = make_response(redirect('/', '303'))
         resp.set_cookie('token', token)
@@ -44,7 +44,7 @@ def signup():
 
     username = escape(request.form['username'])
     if ul.register_user(username,
-                     request.form['password']):
+                        request.form['password']):
         token = ul.create_token(username)
         resp = make_response(redirect('/', '303'))
         resp.set_cookie('token', token, samesite='None', secure=True)

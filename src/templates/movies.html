@@ -39,7 +39,6 @@
             <span>Likes: {{ likes[movie['id']]|length if movie['id'] in likes else 0 }}</span> |
             <span>Hates: {{ hates[movie['id']]|length if movie['id'] in hates else 0 }}</span>
 
-            
             {% if movie['username'] == username %}
             <span class='vote'>your movie!!</span>
             {% elif movie['id'] in likes and username in likes[movie['id']] %}
