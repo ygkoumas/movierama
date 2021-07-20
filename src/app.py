@@ -27,7 +27,7 @@ def login():
                      request.form['password']):
         token = ul.create_token(username)
         resp = make_response(redirect('/', '303'))
-        resp.set_cookie('token', token, samesite='None', secure=True)
+        resp.set_cookie('token', token)
 
         return resp
 

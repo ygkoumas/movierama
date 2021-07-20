@@ -40,6 +40,7 @@ h1 {
   color: #fff;
   position: relative;
   bottom: -70px;
+  text-decoration: none;
 }
 
 .add-movie {
@@ -61,7 +62,7 @@ h1 {
 .movie-section {
   margin-bottom: 20px;
   padding: 20px 20px;
-  width: 800px;
+  max-width: 800px;
   position: relative;
   border: 1px solid black;
 }
@@ -81,12 +82,13 @@ h1 {
 .movie-section span.vote {
   position: absolute;
   right: 0;
+  padding-right: 10px;
 }
 
 a.signup {
   border-radius: 25px;
   border: 1px solid #015;
-  background: #25D;
+  background: #36E;
   padding: 5px 20px;
   color: #fff;
   text-decoration: none;

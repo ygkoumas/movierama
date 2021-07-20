@@ -40,7 +40,9 @@
             <span>Hates: {{ hates[movie['id']]|length if movie['id'] in hates else 0 }}</span>
 
             
-            {% if movie['id'] in likes and username in likes[movie['id']] %}
+            {% if movie['username'] == username %}
+            <span class='vote'>your movie!!</span>
+            {% elif movie['id'] in likes and username in likes[movie['id']] %}
             <span class='vote'>You like this movie | {{ post_link('Unlike', 'unvote', movie['id']) }}</span>
             {% elif movie['id'] in hates and username in hates[movie['id']] %}
             <span class='vote'>You hate this movie | {{ post_link('Unhate', 'unvote', movie['id']) }}</span>
