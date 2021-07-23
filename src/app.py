@@ -1,4 +1,3 @@
-import re
 from flask import Flask, render_template, make_response, request, redirect, escape
 from data.movies import Movies
 from data.movie_votes import MovieVotes
