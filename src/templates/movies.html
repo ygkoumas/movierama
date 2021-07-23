@@ -10,7 +10,7 @@
         <h1>MovieRama</h1><!--
         --><div class='account-area'>
             {% if username != '' %}
-            Welcome back {{username}}
+            Welcome {{username}}
             {% else %}
             <a href={{ url_for('login') }}>Log in</a> or <a class="signup" href={{ url_for('signup') }}>Sign up</a>
             {% endif %}
